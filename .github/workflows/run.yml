@@ -13,13 +13,10 @@ jobs:
 
       - name: Download SoulFire
         run: |
-          # This downloads the actual engine
-          curl -L -o soulfire.zip https://nightly.link/soulfiremc-com/SoulFire/workflows/build/main/dedicated-launcher.zip
-          unzip soulfire.zip
-          # Look for the .jar file name
-          ls -R
+          # Downloading the official stable CLI version
+          curl -L -o soulfire.jar https://github.com/soulfiremc-com/SoulFire/releases/download/v1.1.0/soulfire-cli.jar
 
       - name: Launch My Bots
         run: |
-          # We search for the jar and run it with your IP and register/chat commands
-          java -jar dedicated-launcher/build/libs/SoulFire-dedicated-*.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello from the bots!; repeat 5 5000: send Testing PakSMP..."
+          # Connecting to lapatasmp.fun with registration and chat
+          java -jar soulfire.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello PakSMP!; repeat 5 5000: send Testing defenses..."
