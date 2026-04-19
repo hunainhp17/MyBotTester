@@ -5,11 +5,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
       - name: Download Bot Tool
         run: |
           curl -L -o bot.jar https://github.com/crpmax/mc-bots/releases/download/v1.1/mc-bots.jar
 
       - name: Launch My Bots
         run: |
-          # This hits your server with 50 bots and registers them
+          # This hits lapatasmp.fun with 50 bots
           java -jar bot.jar -s lapatasmp.fun:25565 -c 50 -d 500 1000 -r
