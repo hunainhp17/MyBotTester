@@ -8,14 +8,15 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
 
-      - name: Download Bot Tool
+      - name: Download SoulFire
         run: |
-          curl -L -o bot.jar https://github.com/crpmax/mc-bots/releases/download/v1.1/mc-bots.jar
+          curl -L -o soulfire.jar https://nightly.link/soulfiremc-com/SoulFire/workflows/build/main/dedicated-launcher.zip
+          unzip dedicated-launcher.zip
 
       - name: Launch My Bots
         run: |
-          # This hits lapatasmp.fun with 50 bots
-          java -jar bot.jar -s lapatasmp.fun:25565 -c 50 -d 500 1000 -r
+          # This command joins 50 bots, registers them, and makes them chat every 5 seconds
+          java -jar soulfire.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello from the test bots!; repeat 5 5000: send Testing PakSMP Protection..."
