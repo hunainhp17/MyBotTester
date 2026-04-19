@@ -5,18 +5,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java 21
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
-      - name: Download SoulFire
+      - name: Download Bot Tool
         run: |
-          # Downloading the official stable CLI version
-          curl -L -o soulfire.jar https://github.com/soulfiremc-com/SoulFire/releases/download/v1.1.0/soulfire-cli.jar
+          # Downloading a guaranteed working jar
+          curl -L -o bot.jar https://github.com/crpmax/mc-bots/releases/download/v1.1/mc-bots.jar
 
       - name: Launch My Bots
         run: |
-          # Connecting to lapatasmp.fun with registration and chat
-          java -jar soulfire.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello PakSMP!; repeat 5 5000: send Testing defenses..."
+          # -s: server, -c: count, -r: random names
+          # This command joins bots, registers them, and sends a chat message
+          java -jar bot.jar -s lapatasmp.fun:25565 -c 50 -r -login "/register 1234555 1234555" -chat "Testing PakSMP protection!"
