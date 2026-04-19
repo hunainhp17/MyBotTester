@@ -5,7 +5,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java
+      - name: Setup Java 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -13,10 +13,13 @@ jobs:
 
       - name: Download SoulFire
         run: |
-          curl -L -o soulfire.jar https://nightly.link/soulfiremc-com/SoulFire/workflows/build/main/dedicated-launcher.zip
-          unzip dedicated-launcher.zip
+          # This downloads the actual engine
+          curl -L -o soulfire.zip https://nightly.link/soulfiremc-com/SoulFire/workflows/build/main/dedicated-launcher.zip
+          unzip soulfire.zip
+          # Look for the .jar file name
+          ls -R
 
       - name: Launch My Bots
         run: |
-          # This command joins 50 bots, registers them, and makes them chat every 5 seconds
-          java -jar soulfire.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello from the test bots!; repeat 5 5000: send Testing PakSMP Protection..."
+          # We search for the jar and run it with your IP and register/chat commands
+          java -jar dedicated-launcher/build/libs/SoulFire-dedicated-*.jar --host lapatasmp.fun --port 25565 --amount 50 --script "wait 3000; send /register 1234555 1234555; wait 5000; send Hello from the bots!; repeat 5 5000: send Testing PakSMP..."
